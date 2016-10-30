@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TentSites;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Validator;
 
 class TentSitesController extends Controller
 {
@@ -13,31 +15,42 @@ class TentSitesController extends Controller
 
     public function store(Request $request)
     {
+        /**
+         * @var TentSites $m
+         */
         $m = self::MODEL;
-        try
-        {
-            // Recieve file
+        try {
+            // Receive file
+            /**
+             * @var Validator $v
+             */
             $v = \Validator::make($request->all(), $this->validationRules);
-            if($v->fails())
-            {
+            if($v->fails()) {
                 throw new \Exception("ValidationException");
             }
 
+            // Save data and use id to store image
+            $post = $request->all();
+            if(isset($post['photo'])) {
+                unset($post['photo']);
+            }
+            $data = $m::create($post);
+
             if($request->hasFile('photo')) {
-                $img_location = $request->photo->store('images');
-return $img_location;
-                dd($img_location);
+                $imageName =  env('TENT_SITE_PHOTO_DIR').$data->getAttribute('id'). '.' .
+                    $request->file('photo')->getClientOriginalExtension();
+                \Storage::put(env('TENT_SITE_PHOTO_DIR').$imageName, $request->file('photo'));
+                $data->setAttribute('img_location', $imageName);
+                $data->save();
             }
 
-
-            $data = $m::create(\Request::all());
             return $this->createdResponse($data);
-        }catch(\Exception $ex)
-        {
+        } catch(\Exception $ex) {
             $data = ['form_validations' => $v->errors(), 'exception' => $ex->getMessage()];
             return $this->clientErrorResponse($data);
         }
 
     }
+
 
 }

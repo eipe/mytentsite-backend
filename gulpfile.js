@@ -45,7 +45,19 @@ elixir(function(mix) {
     ], 'public/js/vendor.js');
 });
 
-gulp.task('fonts', function() {
+gulp.task('font-awesome', function() {
     return gulp.src('vendor/bower_components/font-awesome/fonts/*.*')
         .pipe(gulp.dest('public/fonts'));
 });
+
+gulp.task('leaflet-images', function() {
+    return gulp.src('vendor/bower_components/leaflet/dist/images/*.*').
+        pipe(gulp.dest('public/css/images'));
+});
+
+gulp.task('app-images', function() {
+    return gulp.src('resources/assets/images/*.*').
+        pipe(gulp.dest('public/css/images'));
+});
+
+gulp.task('move-component-assets', ['font-awesome', 'leaflet-images', 'app-images']);

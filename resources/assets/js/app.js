@@ -294,7 +294,7 @@
 
     function Photo() {
         var $photo, $cancel, $store, $location, location = null, $uploader, $uploaderLabel, $caption,
-            loaded = false, options = {target: "upload.php"};
+            loaded = false, options = {target: "/tentsites"};
 
         function uploadPicture(photo, callback) {
             $.ajax({
@@ -304,8 +304,7 @@
                     photo: photo,
                     latitude: location.latitude,
                     longitude: location.longitude,
-                    caption: $caption.val(),
-                    title: " "
+                    title: $caption.val()
                 }
             }).success(function(response) {
                 callback(200, response);

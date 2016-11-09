@@ -410,7 +410,7 @@
                     var reader = new FileReader(),
                         $previewImage = $("<img>");
 
-                    reader.onload = function (e) {
+                    reader.onload = function(e) {
                         $previewImage.attr("src", e.target.result);
                     };
                     reader.readAsDataURL(file);
@@ -512,7 +512,7 @@
             },
             displayError: function(title, error) {
                 $modal.find("h4").text(title);
-                $modal.find("p").text(error);
+                $modal.find("p").html(error);
                 $modal.foundation("open");
             }
         }

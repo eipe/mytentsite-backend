@@ -390,7 +390,13 @@
                 EXIF.getData(file, function() {
                     if(typeof EXIF.getTag(this, 'GPSLatitude') === typeof undefined) {
                         // Throw error as this image does not have required EXIF data
-                        $uploaderLabel.addClass("alert").text("Photo does not have valid exif data, try a new one!");
+                        view.displayError(
+                            "Photo does not contain location data",
+                            "We can not accept photos without location data as they are impossible to place on the " +
+                            "map, which indeed is the whole concept of this service. <br /><br />" +
+                            "Please try a new photo"
+                        );
+                        $uploaderLabel.addClass("alert").text("Photo does not contain location data, try a new one!");
                         return false;
                     }
 

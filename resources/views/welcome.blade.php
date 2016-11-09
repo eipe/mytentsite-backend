@@ -98,6 +98,7 @@
             <button class="close-button" data-close aria-label="Close" type="button">
                 <span aria-hidden="true">&times;</span>
             </button>
+            <button data-close aria-label="Close" class="secondary button hollow">OK</button>
         </div>
         <script src="{{ asset('/js/vendor.js') }}"></script>
         <script src="{{ asset('/js/app.js') }}"></script>

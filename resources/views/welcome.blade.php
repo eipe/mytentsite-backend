@@ -10,20 +10,20 @@
         <nav class="top-bar">
             <ul id="menu" class="menu align-center" data-page-default="map">
                 <li data-page="photo">
-                    <a href="#/photo"><i class="fa fa-camera"></i></a>
+                    <a href="#/photo" title="Upload photo of your tentsite"><i class="fa fa-camera"></i></a>
                 </li>
                 <li data-page="map">
-                    <a href="#/map" title="">
+                    <a href="#/map" title="Get a view of shared tentsites on the map">
                         <i class="fa fa-map-o"></i>
                     </a>
                 </li>
                 <li data-page="wall">
-                    <a href="#/wall" title="">
+                    <a href="#/wall" title="Explore shared tentsites by viewing our image wall">
                         <i class="fa fa-th"></i>
                     </a>
                 </li>
                 <li data-page="info">
-                    <a href="#/info" title="Information"><i class="fa fa-info"></i></a>
+                    <a href="#/info" title="Information about this service"><i class="fa fa-info"></i></a>
                 </li>
             </ul>
         </nav>
@@ -40,11 +40,11 @@
                     <input type="text" id="photo-caption" class="input-group-field"
                            title="Caption" placeholder="Caption" />
                     <div class="input-group-button">
-                        <button id="photo-location" class="button secondary" title="Add location">
+                        <button id="photo-location" class="button secondary" title="Location of tentsite">
                             <i class="fa fa-map-marker"></i>
                         </button><button id="photo-cancel" class="button alert" title="Cancel">
                             <i class="fa fa-remove"></i>
-                        </button><button id="photo-store" class="button success" title="Upload photo">
+                        </button><button id="photo-store" class="button success" title="Share this tentsite">
                             <i class="fa fa-check"></i>
                         </button>
                     </div>
@@ -74,7 +74,7 @@
                 </div>
                 <br />
                 <div class="row">
-                    <button class="button float-center is-hidden" id="wall-load-more">Load more images</button>
+                    <button class="button float-center is-hidden" id="wall-load-more">Load more tentsites</button>
                 </div>
                 <div class="row"><br /><br /></div>
             </div>

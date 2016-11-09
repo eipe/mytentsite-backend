@@ -92,6 +92,13 @@
                 </div>
             </div>
         </div>
+        <div class="reveal" id="app-modal" data-reveal>
+            <h4></h4>
+            <p></p>
+            <button class="close-button" data-close aria-label="Close" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         <script src="{{ asset('/js/vendor.js') }}"></script>
         <script src="{{ asset('/js/app.js') }}"></script>
     </body>

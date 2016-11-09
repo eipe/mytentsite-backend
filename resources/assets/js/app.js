@@ -182,7 +182,7 @@
                 });
 
                 TentMap.on("locationerror", function(event) {
-                    alert("Could not find your location. Please turn on gps and try again");
+                    view.displayError("Could not detect your location", event.message);
                 });
 
                 sites.onFetchedSites(function(sites) {
@@ -433,7 +433,7 @@
     }
 
     function View() {
-        var $currentPage, $currentPageContent, currentPageName;
+        var $currentPage, $currentPageContent, currentPageName, $modal;
 
         function toggleCurrentPage() {
             if(typeof $currentPage !== typeof undefined) {
@@ -494,6 +494,7 @@
                 photo = new Photo();
                 map = new Map();
                 wall = new Wall();
+                $modal = $("#app-modal");
                 var $menu = $("#menu");
                 var tmpPageName = localStorage.getItem("App.View.currentPage");
                 if(!tmpPageName) {
@@ -508,6 +509,11 @@
             },
             changePage: function(pageName) {
                 setCurrentPage(findPageByName(pageName), pageName);
+            },
+            displayError: function(title, error) {
+                $modal.find("h4").text(title);
+                $modal.find("p").text(error);
+                $modal.foundation("open");
             }
         }
     }

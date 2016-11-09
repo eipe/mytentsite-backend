@@ -387,42 +387,45 @@
 
             $uploader.on("change", function() {
                 var file = $(this).prop("files")[0];
-                EXIF.getData(file, function() {
-                    if(typeof EXIF.getTag(this, 'GPSLatitude') === typeof undefined) {
-                        // Throw error as this image does not have required EXIF data
-                        view.displayError(
-                            "Photo does not contain location data",
-                            "We can not accept photos without location data as they are impossible to place on the " +
-                            "map, which indeed is the whole concept of this service. <br /><br />" +
-                            "Please try a new photo"
-                        );
-                        $uploaderLabel.addClass("alert").text("Photo does not contain location data, try a new one!");
-                        return false;
-                    }
 
-                    var exifData = EXIF.getAllTags(this),
-                        lat = exifData.GPSLatitude,
-                        lng = exifData.GPSLongitude;
+                if(typeof file !== typeof undefined) {
+                    EXIF.getData(file, function() {
+                        if(typeof EXIF.getTag(this, 'GPSLatitude') === typeof undefined) {
+                            // Throw error as this image does not have required EXIF data
+                            view.displayError(
+                                "Photo does not contain location data",
+                                "We can not accept photos without location data as they are impossible to place on the " +
+                                "map, which indeed is the whole concept of this service. <br /><br />" +
+                                "Please try a new photo"
+                            );
+                            $uploaderLabel.addClass("alert").text("Photo does not contain location data, try a new one!");
+                            return false;
+                        }
 
-                    // Convert coordinates to WGS84 decimal
-                    var latRef = exifData.GPSLatitudeRef || "N";
-                    var lngRef = exifData.GPSLongitudeRef || "W";
-                    lat = (lat[0] + lat[1]/60 + lat[2]/3600) * (latRef == "N" ? 1 : -1);
-                    lng = (lng[0] + lng[1]/60 + lng[2]/3600) * (lngRef == "W" ? -1 : 1);
+                        var exifData = EXIF.getAllTags(this),
+                            lat = exifData.GPSLatitude,
+                            lng = exifData.GPSLongitude;
 
-                    setLocation(lat, lng);
-                    togglePhotoControllers();
+                        // Convert coordinates to WGS84 decimal
+                        var latRef = exifData.GPSLatitudeRef || "N";
+                        var lngRef = exifData.GPSLongitudeRef || "W";
+                        lat = (lat[0] + lat[1]/60 + lat[2]/3600) * (latRef == "N" ? 1 : -1);
+                        lng = (lng[0] + lng[1]/60 + lng[2]/3600) * (lngRef == "W" ? -1 : 1);
 
-                    var reader = new FileReader(),
-                        $previewImage = $("<img>");
+                        setLocation(lat, lng);
+                        togglePhotoControllers();
 
-                    reader.onload = function(e) {
-                        $previewImage.attr("src", e.target.result);
-                    };
-                    reader.readAsDataURL(file);
+                        var reader = new FileReader(),
+                            $previewImage = $("<img>");
 
-                    $previewImage.appendTo($photo);
-                });
+                        reader.onload = function(e) {
+                            $previewImage.attr("src", e.target.result);
+                        };
+                        reader.readAsDataURL(file);
+
+                        $previewImage.appendTo($photo);
+                    });
+                }
             });
         }
 

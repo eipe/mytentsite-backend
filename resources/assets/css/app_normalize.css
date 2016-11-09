@@ -24,6 +24,10 @@
     padding: 0;
 }
 
+.leaflet-control-layers-list label > input {
+    margin-bottom: 0;
+}
+
 /* Foundation overrides */
 .easy-button-button {
     padding: 0;

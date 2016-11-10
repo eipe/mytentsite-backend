@@ -296,31 +296,28 @@
         var $photo, $cancel, $store, $location, location = null, $uploader, $uploaderLabel, $caption,
             loaded = false, options = {target: "/tentsites"};
 
-        function uploadPicture(photo, callback) {
-            $.ajax({
-                url: options.target,
-                method: "POST",
-                data: {
-                    photo: photo,
-                    latitude: location.latitude,
-                    longitude: location.longitude,
-                    title: $caption.val()
-                }
-            }).success(function(response) {
-                callback(200, response);
-            }).error(function(response) {
-                callback(400, response);
-            });
-        }
-
-        function storePicture(callback) {
+        function storePhoto(callback) {
             if(typeof $uploader.prop("files") !== typeof undefined) {
-                var fileReader = new FileReader();
-                fileReader.addEventListener("load", function(e) {
-                    uploadPicture(fileReader.result, callback);
+                var photoData = new FormData();
+                photoData.append("photo", $uploader.prop("files")[0]);
+                photoData.append("latitude", location.latitude);
+                photoData.append("longitude", location.longitude);
+                photoData.append("title", $caption.val());
+
+                $.ajax({
+                    url: options.target,
+                    method: "POST",
+                    data: photoData,
+                    cache : false,
+                    contentType : false,
+                    processType : false
+                }).success(function(response) {
+                    callback(200, response);
+                }).error(function(response) {
+                    callback(400, response);
                 });
-                fileReader.readAsDataURL($uploader.prop("files")[0]);
             }
+            callback(400, "Missing file to upload")
         }
 
         function togglePhotoControllers() {
@@ -368,15 +365,18 @@
                 if(!location) {
                     return false;
                 }
-                storePicture(function(code, text) {
-                    if(code === 200) {
+                storePhoto(function(responseCode, responseText) {
+                    if(responseCode === 200) {
                         $uploaderLabel
                             .addClass("success")
                             .text("Photo successfully uploaded. Click to upload a new photo");
                         clearPhotoDetails();
                         togglePhotoControllers();
                     } else {
-                        // Todo: Add some information to user - try again
+                        view.displayError(
+                            "Upload of photo was not successful",
+                            responseText
+                        );
                     }
                 });
             });

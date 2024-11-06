@@ -1,3 +1,5 @@
+# This repository has been archived and will not be maintained anymore
+
 # Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
